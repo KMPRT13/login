@@ -1,0 +1,60 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="expires" content="-1">
+    <title>Internet hotspot - Log out</title>
+    <link rel="stylesheet" href="style.css">
+    <script>
+        function openLogin() {
+            if (window.name != 'hotspot_logout') return true;
+            open('$(link-login)', '_blank', '');
+            window.close();
+            return false;
+        }
+    </script>
+    <style>
+        /* Add styles for layout */
+        .info {
+            text-align: center; /* Center-align the content */
+            margin: 10px 0; /* Add margin for spacing */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="ie-fixMinHeight">
+        <div class="background"></div>
+        <div class="main">
+            <div class="wrap">
+                <h1><marquee>Kamu logout dari wifi untuk bisa akses wifi login lagi !!</marquee></h1> 
+                
+                <div class="info">
+                    <div>Username:</div>
+                    <div>$(username)</div>
+                </div>
+                <div class="info">
+                    <div>Tersambung:</div>
+                    <div>$(uptime)</div>
+                </div>
+                $(if session-time-left)
+                <div class="info">
+                    <div>Sisa Waktu:</div>
+                    <div>$(session-time-left)</div>
+                </div>
+                $(endif)
+                <div class="info">
+                    <div>up / down:</div>
+                    <div>$(bytes-in-nice) / $(bytes-out-nice)</div>
+                </div>
+
+                <form action="$(link-login)" name="login" onSubmit="return openLogin()">
+                    <!--input type="submit" value="Log in"-->
+                    <button type="submit">Log in</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,173 @@
+<html>
+<head>
+$(if refresh-timeout)
+<meta http-equiv="refresh" content="$(refresh-timeout-secs)">
+$(endif)
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />   
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="expires" content="-1">
+<title>Internet hotspot - Status</title>
+<link rel="stylesheet" href="style.css">
+<script>
+
+$(if advert-pending == 'yes')
+    var popup = '';
+    function focusAdvert() {
+	if (window.focus) popup.focus();
+    }
+    function openAdvert() {
+	popup = open('$(link-advert)', 'hotspot_advert', '');
+	setTimeout("focusAdvert()", 1000);
+    }
+$(endif)
+    function openLogout() {
+	if (window.name != 'hotspot_status') return true;
+        open('$(link-logout)', 'hotspot_logout', 'toolbar=0,location=0,directories=0,status=0,menubars=0,resizable=1,width=280,height=250');
+	window.close();
+	return false;
+    }
+</script>
+</head>
+<body $(if advert-pending == 'yes') onLoad="openAdvert()" $(endif)> 
+<div class="background"></div> <!-- Background Animasi -->
+    <div class="ie-fixMinHeight">
+        <div class="main">
+            <div class="wrap">
+                <form action="$(link-logout)" name="logout" onSubmit="return openLogout()">
+                <div><h1><marquee>$(if login-by == 'trial')<h1>Halo, trial !</h1>$(elif login-by != 'mac')<h1>Halo, $(username)!</h1>$(endif)</marquee></h1></div>                
+                <table class="pricing-table">
+                    <thead>
+                        <tr>
+                            <th>Paket</th>
+                            <th>Kecepatan</th>
+                            <th>Harga</th>
+                        </tr>
+                    </thead>
+                    <tbody id="pricingTableBody">
+                        <!-- Data akan dimuat di sini dari JavaScript -->
+                    </tbody>
+                </table>
+                
+                
+                <table class="pricing-table">
+                    <thead>
+                        <tr>
+                            <th>Username</th>
+                            <th>profile</th>
+                            <th>Tersambung</th>
+                            <th>UP/DOWN</th>
+                            <th>Sisa Waktu</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>$(username)</td>
+                            <td>$(user profile)</td>
+                            <td>$(uptime)</td>
+                            <td>$(bytes-in-nice) / $(bytes-out-nice)</td>
+                            <td>$(session-time-left)</td>
+                        </tr>
+                    </tbody>
+                </table>
+                    </div>
+                    $(if login-by-mac != 'yes')            
+
+                    <!-- user manager link. if user manager resides on other router, replace $(hostname) by its address
+                    <button onclick="document.location='http://$(hostname)/user?subs='; return false;">status</button>
+                    <!-- end of user manager link -->
+
+                    <button type="submit">Log out</button>
+
+                    <!--input type="submit" value="Log Out" /-->
+                    
+                    $(endif)
+                </form>
+            </div>
+        </div>
+    </div>
+    <style>
+        /* Ga ya untuk tabel harga */
+        .container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .pricing-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .pricing-table th, .pricing-table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+        }
+
+        .pricing-table th {
+            background-color: #ff6600;
+            color: white;
+        }
+
+        .back-link {
+            margin-top: 20px;
+        }
+
+        .back-link a {
+            text-decoration: none;
+            color: #333;
+        }
+
+        .back-link a:hover {
+            text-decoration: underline;
+        }
+        button {
+        width: 100%;
+        padding: 12px;
+        margin-top: 10px;
+        border: none;
+        border-radius: 6px;
+        background: linear-gradient(90deg, #ff416c, #ff4b2b);
+        color: #ffffff;
+        font-size: 1rem;
+        font-weight: bold;
+        cursor: pointer;
+        transition: transform 0.3s ease;
+        box-shadow: 0 4px 15px rgba(255, 75, 43, 0.4);
+        }
+
+        button:hover {
+            transform: scale(1.05);
+        }
+    </style>
+<script>
+    // Fungsi untuk membaca file CSV dan mengonversinya menjadi array
+    async function loadCSV(url) {
+        const response = await fetch(url);
+        const data = await response.text();
+        return data.split('\n').slice(1).map(row => row.split(','));
+    }
+    
+    // Fungsi untuk menampilkan data dari CSV ke tabel HTML
+    async function displayPricingTable() {
+        const tableBody = document.getElementById('pricingTableBody');
+        const csvData = await loadCSV('price.csv'); // Sesuaikan dengan path file CSV
+    
+        csvData.forEach(row => {
+            const tableRow = document.createElement('tr');
+            row.forEach(cell => {
+                const tableCell = document.createElement('td');
+                tableCell.textContent = cell.trim();
+                tableRow.appendChild(tableCell);
+            });
+            tableBody.appendChild(tableRow);
+        });
+    }
+    
+    // Memuat tabel saat halaman siap
+    document.addEventListener('DOMContentLoaded', displayPricingTable);
+    </script>
+</body>
+</html>

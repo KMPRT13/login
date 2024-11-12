@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar Harga - KmprtClothing</title>
+    <link rel="stylesheet" href="stylea.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Daftar Harga Layanan Internet</h2>
+        <p>Pilih paket internet yang sesuai dengan kebutuhan Anda:</p>
+
+        <table class="pricing-table">
+            <thead>
+                <tr>
+                    <th>Paket</th>
+                    <th>Kecepatan</th>
+                    <th>Harga</th>
+                </tr>
+            </thead>
+            <tbody id="pricingTableBody">
+                <!-- Data akan dimuat di sini dari JavaScript -->
+            </tbody>
+        </table>
+        
+        <p>Pesan akun <br></br> <a href="http://34.101.148.12/payment/">Pesan lewat Website</a><br></br><a href="https://wa.me/6287777450079">Pesan Lewat WhatsApp</a></p>
+        <div class="back-link">
+            <button onclick="window.location.href='login.html'">Kembali ke Login</button>
+        </div>
+    </div>
+
+    <style>
+        /* Gaya untuk tabel harga */
+        .container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .pricing-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .pricing-table th, .pricing-table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+        }
+
+        .pricing-table th {
+            background-color: #ff6600;
+            color: white;
+        }
+
+        .back-link {
+            margin-top: 20px;
+        }
+
+        .back-link a {
+            text-decoration: none;
+            color: #333;
+        }
+
+        .back-link a:hover {
+            text-decoration: underline;
+        }
+        button {
+        width: 100%;
+        padding: 12px;
+        margin-top: 10px;
+        border: none;
+        border-radius: 6px;
+        background: linear-gradient(90deg, #ff416c, #ff4b2b);
+        color: #ffffff;
+        font-size: 1rem;
+        font-weight: bold;
+        cursor: pointer;
+        transition: transform 0.3s ease;
+        box-shadow: 0 4px 15px rgba(255, 75, 43, 0.4);
+        }
+
+        button:hover {
+            transform: scale(1.05);
+        }
+    </style>
+
+<script>
+    // Fungsi untuk membaca file CSV dan mengonversinya menjadi array
+    async function loadCSV(url) {
+        const response = await fetch(url);
+        const data = await response.text();
+        return data.split('\n').slice(1).map(row => row.split(','));
+    }
+    
+    // Fungsi untuk menampilkan data dari CSV ke tabel HTML
+    async function displayPricingTable() {
+        const tableBody = document.getElementById('pricingTableBody');
+        const csvData = await loadCSV('price.csv'); // Sesuaikan dengan path file CSV
+    
+        csvData.forEach(row => {
+            const tableRow = document.createElement('tr');
+            row.forEach(cell => {
+                const tableCell = document.createElement('td');
+                tableCell.textContent = cell.trim();
+                tableRow.appendChild(tableCell);
+            });
+            tableBody.appendChild(tableRow);
+        });
+    }
+    
+    // Memuat tabel saat halaman siap
+    document.addEventListener('DOMContentLoaded', displayPricingTable);
+    </script>
+    
+</body>
+</html>

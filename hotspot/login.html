@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="pragma" content="no-cache" />
+    <meta http-equiv="expires" content="-1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KmprtClothing - Log in</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="background"></div>
+<div class="container">
+    <div class="login-box">
+        <div class="logo-container">
+            <img class="ico" src="favicon.ico" alt="Kmprt Clothing Logo" />
+        </div>
+        <h2><span class="highlight">KmprtClothing.com</span></h2>
+        <p class="description">Login untuk akses internet</p>
+        <!-- Menambahkan Tab Menu -->
+        <div class="tab-menu">
+            <a href="#" class="tab active">Login</a>
+            <a href="pricing.html" class="tab">Daftar Harga</a> <!-- Path menuju pricing.html -->
+        </div>
+        <!-- Login form for CHAP authentication -->
+        <form name="sendin" action="$(link-login-only)" method="post" style="display:none">
+            <input type="hidden" name="username" />
+            <input type="hidden" name="password" />
+            <input type="hidden" name="dst" value="$(link-orig)" />
+            <input type="hidden" name="popup" value="true" />
+        </form>
+        <script src="/md5.js"></script>
+        <script>
+            function doLogin() {
+                document.sendin.username.value = document.login.username.value;
+                document.sendin.password.value = hexMD5('$(chap-id)' + document.login.password.value + '$(chap-challenge)');
+                document.sendin.submit();
+                return false;
+            }
+        </script>
+
+        <div class="ie-fixMinHeight">
+            <div class="main">
+                <div class="wrap animated fadeIn">
+                    <form name="login" action="$(link-login-only)" method="post" onSubmit="$(if chap-id) return doLogin() $(endif)">
+                        <input type="hidden" name="dst" value="$(link-orig)" />
+                        <input type="hidden" name="popup" value="true" />              
+                        
+                        <label class="input-group">
+                            <img class="ico" src="img/user.svg" alt="User Icon" />
+                            <input name="username" type="text" value="$(username)" placeholder="Username" aria-label="Username" required />
+                        </label>
+                        
+
+                        <label class="input-group">
+                            <img class="ico" src="img/password.svg" alt="password" />
+                            <input name="password" type="password" placeholder="Password" aria-label="Password" required />
+                        </label>
+
+                        <button type="submit">Login</button>
+
+                        <p class="info $(if error)alert$(endif)">
+                            <h2>$(if error == "")$(if trial == 'yes')                              
+                                <button class="trial-button" onclick="window.location.href='$(link-login-only)?dst=$(link-orig-esc)&amp;username=T-$(mac-esc)'">Coba Wifi Gratis</button>
+                            $(endif)$(endif)</h2>
+                            $(if error)$(error)$(endif)
+                        </p>
+                    </form>
+
+                    <div class="footer">
+                        
+
+                        <p>Pesan akun <br></br> <a href="http://34.101.148.12/payment/">Pesan lewat Website</a><br></br><a href="https://wa.me/6287777450079">Pesan Lewat WhatsApp</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Gaya untuk tab menu */
+    .tab-menu {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 20px;
+    }
+
+    .tab-menu .tab {
+        padding: 10px 20px;
+        margin: 0 10px;
+        text-decoration: none;
+        color: #ffdd00;
+        border-bottom: 5px solid #ff00ff;
+    }
+
+    .tab-menu .tab.active, .tab-menu .tab:hover {
+        border-bottom: 5px solid #ff6600; /* Warna highlight tab */
+    }
+    .input-group {
+    display: flex;
+    align-items: left;
+    gap: 10px; /* Jarak antara gambar dan input */
+    }
+
+    .input-group img.ico {
+        width: 20px; /* Sesuaikan ukuran ikon */
+        height: 20px;
+    }
+
+    .input-group input[type="text"] {
+        flex: 1;
+        padding: 15px;
+        font-size: 15px;
+    }
+
+</style>
+
+</body>
+</html>

@@ -1,0 +1,156 @@
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />   
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="expires" content="-1">
+<title>Internet hotspot - Log out</title>
+<link rel="stylesheet" href="style.css">
+<script>
+    function openLogin() {
+	if (window.name != 'hotspot_logout') return true;
+	open('$(link-login)', '_blank', '');
+	window.close();
+	return false;
+    }
+</script>
+</head>
+
+<body>
+<div class="background"></div>
+    <div class="ie-fixMinHeight">
+        <div class="main">
+            <div class="wrap">
+                <h1><marquee>Kamu logout dari wifi untuk bisa akses wifi login lagi !!</marquee></h1> 
+                <table class="pricing-table">
+                    <thead>
+                        <tr>
+                            <th>Paket</th>
+                            <th>Kecepatan</th>
+                            <th>Harga</th>
+                            <th>Durasi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Paket Harian</td>
+                            <td>Upto 20 Mbps</td>
+                            <td>Rp5.000/hari</td>
+                            <td>24 Jam</td>
+                        </tr>
+        
+                        <tr>
+                            <td>Paket Basic</td>
+                            <td>Upto 20 Mbps</td>
+                            <td>Rp30.000/bulan</td>
+                            <td>30 Hari</td>
+                        </tr>
+                        <tr>
+                            <td>Paket Standard</td>
+                            <td>Upto 35 Mbps</td>
+                            <td>Rp50.000/bulan</td>
+                            <td>30 Hari</td>
+                        </tr>
+                        <tr>
+                            <td>Paket Premium</td>
+                            <td>Upto 50 Mbps</td>
+                            <td>Rp75.000/bulan</td>
+                            <td>30 Hari</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                
+                <table class="pricing-table">
+                    <thead>
+                        <tr>
+                            <th>Username</th>
+                            <th>profile</th>
+                            <th>Tersambung</th>
+                            <th>UP/DOWN</th>
+                            <th>Sisa Waktu</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>$(username)</td>
+                            <td>$(user_profile)</td>
+                            <td>$(uptime)</td>
+                            <td>$(bytes-in-nice) / $(bytes-out-nice)</td>
+                            <td>$(session-time-left)</td>
+                        </tr>
+                    </tbody>
+                </table>
+                    </div>
+                    $(if login-by-mac != 'yes')            
+
+                    <!-- user manager link. if user manager resides on other router, replace $(hostname) by its address
+                    <button onclick="document.location='http://$(hostname)/user?subs='; return false;">status</button>
+                    <!-- end of user manager link -->
+                
+
+                <form action="$(link-login)" name="login" onSubmit="return openLogin()">
+                    <!--input type="submit" value="Log in"-->
+                    <button type="submit">Log in</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <style>
+        /* Ga ya untuk tabel harga */
+        .container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .pricing-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .pricing-table th, .pricing-table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+        }
+
+        .pricing-table th {
+            background-color: #ff6600;
+            color: white;
+        }
+
+        .back-link {
+            margin-top: 20px;
+        }
+
+        .back-link a {
+            text-decoration: none;
+            color: #333;
+        }
+
+        .back-link a:hover {
+            text-decoration: underline;
+        }
+        button {
+        width: 100%;
+        padding: 12px;
+        margin-top: 10px;
+        border: none;
+        border-radius: 6px;
+        background: linear-gradient(90deg, #ff416c, #ff4b2b);
+        color: #ffffff;
+        font-size: 1rem;
+        font-weight: bold;
+        cursor: pointer;
+        transition: transform 0.3s ease;
+        box-shadow: 0 4px 15px rgba(255, 75, 43, 0.4);
+        }
+
+        button:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</body>
+</html>

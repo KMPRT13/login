@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="pragma" content="no-cache" />
+    <meta http-equiv="expires" content="-1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KmprtClothing - Log in</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+<div class="background"></div>
+<div class="container">
+    <div class="login-box">
+        <div class="logo-container">
+            <img class="ico" src="favicon.ico" alt="Kmprt Clothing Logo" />
+        </div>
+        <h2><span class="highlight">KmprtClothing.com</span></h2>
+        <p class="description">Login untuk akses internet</p>
+
+        <!-- Login form for CHAP authentication -->
+        <form name="sendin" action="$(link-login-only)" method="post" style="display:none">
+            <input type="hidden" name="username" />
+            <input type="hidden" name="password" />
+            <input type="hidden" name="dst" value="$(link-orig)" />
+            <input type="hidden" name="popup" value="true" />
+        </form>
+
+        <script src="/md5.js"></script>
+        <script>
+            function doLogin() {
+                document.sendin.username.value = document.login.username.value;
+                document.sendin.password.value = hexMD5('$(chap-id)' + document.login.password.value + '$(chap-challenge)');
+                document.sendin.submit();
+                return false;
+            }
+        </script>
+
+        <div class="ie-fixMinHeight">
+            <div class="main">
+                <div class="wrap animated fadeIn">
+                    <form name="login" action="$(link-login-only)" method="post" onSubmit="$(if chap-id) return doLogin() $(endif)">
+                        <input type="hidden" name="dst" value="$(link-orig)" />
+                        <input type="hidden" name="popup" value="true" />
+
+                        <p class="info $(if error)alert$(endif)">
+                            $(if error == "")Login untuk akses internet $(if trial == 'yes')<br />
+                            atau coba wifi gratis, <a href="$(link-login-only)?dst=$(link-orig-esc)&amp;username=T-$(mac-esc)">klik di sini</a>.$(endif)
+                            $(endif)
+                            $(if error)$(error)$(endif)
+                        </p>
+                        
+                        <label>
+                            <input name="username" type="text" value="$(username)" placeholder="Username" aria-label="Username" required />
+                        </label>
+
+                        <label>
+                            <input name="password" type="password" placeholder="Password" aria-label="Password" required />
+                        </label>
+
+                        <!--input type="submit" value="Log in"-->
+                        <button type="submit">Login</button>
+                    </form>
+
+                    <div class="footer">
+                        <p>Belum punya akun? <a href="http://34.101.148.12/payment/">Buat di sini lewat Website</a> atau <br></br> <a href="https://wa.me/6287777450079">Lewat WhatsApp</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
